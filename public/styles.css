@@ -1,3 +1,26 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
-  color: red;
+  font-family: sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 8px;
+}
+
+.animal {
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+h2 {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+p {
+  text-transform: capitalize;
 }
