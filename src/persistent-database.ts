@@ -1,9 +1,5 @@
-import {JSONFilePreset} from 'lowdb/node'
-import {Animal} from './types.js'
-
-type Database = {
-  animals: Animal[]
-}
+import {JSONFileSyncPreset} from 'lowdb/node'
+import {Animal, Database} from './types.js'
 
 const initialData: Database = {
   animals: [
@@ -22,33 +18,27 @@ const initialData: Database = {
   ]
 }
 
-const db = await JSONFilePreset('db.json', initialData)
-
-async function getAnimals() {
-  await db.read()
-  return db.data.animals
-}
-
-async function addAnimal(animal: Animal) {
-  db.data.animals.push(animal)
-  await db.write()
-}
-
-async function removeAnimal(name: string) {
-  const index = db.data.animals.findIndex(animal => animal.name === name)
-  db.data.animals.splice(index, 1)
-  await db.write()
-}
-
-async function favoriteAnimal(name: string) {
-  const index = db.data.animals.findIndex(animal => animal.name === name)
-  db.data.animals[index].isFavorite = !db.data.animals[index].isFavorite
-  await db.write()
-}
+const db = JSONFileSyncPreset('db.json', initialData)
 
 export const database = {
-  getAnimals,
-  addAnimal,
-  removeAnimal,
-  favoriteAnimal
+  animals: {
+    list(): Animal[] {
+      db.read()
+      return db.data.animals
+    },
+    create(animal: Animal) {
+      db.data.animals.push(animal)
+      db.write()
+    },
+    remove(name: string) {
+      const index = db.data.animals.findIndex(animal => animal.name === name)
+      db.data.animals.splice(index, 1)
+      db.write()
+    },
+    favorite(name: string) {
+      const index = db.data.animals.findIndex(animal => animal.name === name)
+      db.data.animals[index].isFavorite = !db.data.animals[index].isFavorite
+      db.write()
+    }
+  },
 }

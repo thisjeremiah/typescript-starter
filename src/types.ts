@@ -5,3 +5,7 @@ export type Animal = {
   family: Family
   isFavorite?: boolean
 }
+
+export type Database = {
+  animals: Animal[]
+}

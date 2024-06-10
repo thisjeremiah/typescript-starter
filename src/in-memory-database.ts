@@ -1,41 +1,37 @@
-import {Animal} from "./types.js"
+import {Animal, Database} from "./types.js"
 
-const animals: Animal[] = [
-  {
-    name: 'Dog',
-    family: 'mammal',
-  },
-  {
-    name: 'Cat',
-    family: 'mammal',
-  },
-  {
-    name: 'Snake',
-    family: 'reptile',
-  }
-]
-
-async function getAnimals() {
-  return animals
-}
-
-async function addAnimal(animal: Animal) {
-  animals.push(animal)
-}
-
-async function removeAnimal(name: string) {
-  const index = animals.findIndex(animal => animal.name === name)
-  animals.splice(index, 1)
-}
-
-async function favoriteAnimal(name: string) {
-  const index = animals.findIndex(animal => animal.name === name)
-  animals[index].isFavorite = !animals[index].isFavorite
+const data: Database = {
+  animals: [
+    {
+      name: 'Dog',
+      family: 'mammal',
+    },
+    {
+      name: 'Cat',
+      family: 'mammal',
+    },
+    {
+      name: 'Snake',
+      family: 'reptile',
+    }
+  ]
 }
 
 export const database = {
-  getAnimals,
-  addAnimal,
-  removeAnimal,
-  favoriteAnimal
+  animals: {
+    list(): Animal[] {
+      return data.animals
+    },
+    create(animal: Animal) {
+      data.animals.push(animal)
+    },
+    remove(name: string) {
+      const index = data.animals.findIndex(animal => animal.name === name)
+      data.animals.splice(index, 1)
+    },
+    favorite(name: string) {
+      const index = data.animals.findIndex(animal => animal.name === name)
+      data.animals[index].isFavorite = !data.animals[index].isFavorite
+    }
+  },
 }
