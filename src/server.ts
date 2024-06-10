@@ -1,6 +1,7 @@
 import express from 'express'
 import {engine} from 'express-handlebars';
-import {database} from './database';
+import {database} from './persistent-database.js';
+// import {database} from './in-memory-database-database.js';
 
 const app = express();
 
@@ -11,24 +12,24 @@ app.set('views', 'views');
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
 
-app.get('/', (request, response) => {
+app.get('/', async (request, response) => {
   response.render('home', {
-    animals: database.getAnimals()
+    animals: await database.getAnimals()
   });
 })
 
-app.post('/animals/create', (request, response) => {
-  database.addAnimal(request.body);
+app.post('/animals/create', async (request, response) => {
+  await database.addAnimal(request.body);
   response.redirect('/');
 });
 
-app.post('/animals/delete/:name', (request, response) => {
-  database.removeAnimal(request.params.name);
+app.post('/animals/delete/:name', async (request, response) => {
+  await database.removeAnimal(request.params.name);
   response.redirect('/');
 });
 
-app.post('/animals/favorite/:name', (request, response) => {
-  database.favoriteAnimal(request.params.name);
+app.post('/animals/favorite/:name', async (request, response) => {
+  await database.favoriteAnimal(request.params.name);
   response.redirect('/');
 });
 

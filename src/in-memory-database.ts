@@ -1,10 +1,4 @@
-type Family = 'mammal' | 'bird' | 'reptile' | 'amphibian' | 'fish' | 'invertebrate'
-
-type Animal = {
-  name: string
-  family: Family
-  isFavorite?: boolean
-}
+import {Animal} from "./types.js"
 
 const animals: Animal[] = [
   {
@@ -21,20 +15,20 @@ const animals: Animal[] = [
   }
 ]
 
-function getAnimals() {
+async function getAnimals() {
   return animals
 }
 
-function addAnimal(animal: Animal) {
+async function addAnimal(animal: Animal) {
   animals.push(animal)
 }
 
-function removeAnimal(name: string) {
+async function removeAnimal(name: string) {
   const index = animals.findIndex(animal => animal.name === name)
   animals.splice(index, 1)
 }
 
-function favoriteAnimal(name: string) {
+async function favoriteAnimal(name: string) {
   const index = animals.findIndex(animal => animal.name === name)
   animals[index].isFavorite = !animals[index].isFavorite
 }
