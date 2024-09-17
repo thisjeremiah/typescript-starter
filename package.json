@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node lib/server.js"
+    "start": "node lib/server.js",
+    "dev": "node lib/server.js"
   },
   "dependencies": {
     "express": "^4.19.2",
